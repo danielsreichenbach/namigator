@@ -4,6 +4,20 @@ namigator is a drop-in, high-performance, and *nearly* feature complete
 pathfinding system for server-controlled movement of units within a World of
 Warcraft environment.
 
+## Quick Start
+
+### Building with CMake Presets (Recommended - CMake 3.22+)
+```bash
+# Configure and build
+cmake --preset linux-release
+cmake --build --preset linux-release
+
+# Install
+cmake --install build/linux-release
+```
+
+For more build options, see the [build documentation](#building) below.
+
 ## Components
 
 namigator is made of three different types of components: applications, shared
@@ -77,6 +91,44 @@ is therefore not natively suitable for use in bots.  Though its possible such
 capability may evolve, I also avoided explicitly supporting this use case. My
 goal is not to improve the ability of those who undermine the integrity of a
 server with large scale automation.
+
+## Building
+
+### Prerequisites
+- CMake 3.22 or higher
+- C++17 compatible compiler
+- Python 3 (optional, for Python bindings)
+
+### Using Build Scripts
+```bash
+# Simple build with defaults
+./build.sh
+
+# Build with specific preset
+./build.sh --preset linux-debug
+
+# Developer build with interactive options
+./build-dev.sh
+```
+
+### Manual Build
+```bash
+# List available presets
+cmake --list-presets
+
+# Configure, build, and install
+cmake --preset linux-release
+cmake --build --preset linux-release
+cmake --install build/linux-release
+```
+
+### Available CMake Presets
+- `linux-debug` - Debug build for Linux
+- `linux-release` - Release build for Linux  
+- `windows-debug` - Debug build for Windows
+- `windows-release` - Release build for Windows
+- `ci-linux` - CI configuration for Linux
+- `ci-windows` - CI configuration for Windows
 
 ## Feedback
 
