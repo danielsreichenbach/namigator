@@ -1,7 +1,11 @@
-file(GLOB PY_SCRIPTS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*.py")
+# Explicitly list test scripts
+set(PY_SCRIPTS
+    smoke_tests.py
+    manual_tests.py
+)
 
 foreach(script ${PY_SCRIPTS})
-    install(PROGRAMS ${script} DESTINATION test)
-endforeach(script)
+    install(PROGRAMS ${script} DESTINATION ${CMAKE_INSTALL_DATADIR}/namigator/test)
+endforeach()
 
-install(PROGRAMS "test_map.mpq" DESTINATION test)
+install(FILES test_map.mpq DESTINATION ${CMAKE_INSTALL_DATADIR}/namigator/test)

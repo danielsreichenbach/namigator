@@ -1,4 +1,4 @@
-add_library(parser STATIC ${SRC_MAP} ${SRC_ADT} ${SRC_WMO} ${SRC_DOODAD}
+add_library(parser STATIC
     Adt/Adt.cpp
     Adt/AdtChunk.cpp
     Adt/Chunks/Subchunks/MCLQ.cpp
@@ -28,10 +28,32 @@ add_library(parser STATIC ${SRC_MAP} ${SRC_ADT} ${SRC_WMO} ${SRC_DOODAD}
     DBC.cpp
     MpqManager.cpp
 )
+add_library(namigator::parser ALIAS parser)
 
-target_link_libraries(parser utility storm ${FILESYSTEM_LIBRARY})
-target_include_directories(parser PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(parser 
+    PUBLIC
+        namigator::utility
+        storm
+    PRIVATE
+        $<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,9.0>>:stdc++fs>
+)
+
+target_include_directories(parser 
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
+        $<INSTALL_INTERFACE:include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Set C++ standard for this target
+target_compile_features(parser PUBLIC cxx_std_17)
 
 if (NAMIGATOR_BUILD_C_API)
-    install(TARGETS parser ARCHIVE DESTINATION lib)
+    install(TARGETS parser 
+        EXPORT namigatorTargets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
 endif()
