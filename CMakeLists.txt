@@ -87,6 +87,11 @@ if (WIN32 AND NAMIGATOR_BUILD_EXECUTABLES)
     add_subdirectory(MapViewer)
 endif()
 
+# SDL3-based cross-platform viewer
+if(NAMIGATOR_BUILD_EXECUTABLES)
+    add_subdirectory(MapViewerSDL)
+endif()
+
 # Installation and packaging
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
